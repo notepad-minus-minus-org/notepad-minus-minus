@@ -14,11 +14,10 @@ public class RenderPane extends JPanel {
         JPanel header = new JPanel(new BorderLayout());
         header.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 6));
 
-        JLabel title = new JLabel("Render Pane");
+        JLabel title = new JLabel("Render Preview");
 
         JButton closeButton = new JButton("×");
         closeButton.setFocusPainted(false);
-        closeButton.addActionListener(_ -> mainFrame.closePane(this));
 
         header.add(title, BorderLayout.CENTER);
         header.add(closeButton, BorderLayout.EAST);

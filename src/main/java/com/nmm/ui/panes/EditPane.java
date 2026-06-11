@@ -14,17 +14,16 @@ public class EditPane extends JPanel {
         JPanel header = new JPanel(new BorderLayout());
         header.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 6));
 
-        JLabel title = new JLabel("Edit Pane");
+        JLabel title = new JLabel("Editor");
 
         JButton closeButton = new JButton("×");
         closeButton.setFocusPainted(false);
-        closeButton.addActionListener(_ -> mainFrame.closePane(this));
 
         header.add(title, BorderLayout.CENTER);
         header.add(closeButton, BorderLayout.EAST);
         add(header, BorderLayout.NORTH);
 
-        JLabel placeholder = new JLabel("Editor Content Placeholder", SwingConstants.CENTER);
+        JLabel placeholder = new JLabel("Editor Content Placeholder test", SwingConstants.CENTER);
         add(placeholder, BorderLayout.CENTER);
     }
 }
