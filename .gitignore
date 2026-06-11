@@ -1,3 +1,20 @@
-.idea/
-.gradle
+# Eclipse / Language Server (jdtls) Junk
+.classpath
+.project
+.settings/
+bin/
+.factorypath
+
+# Gradle Build Directories
+.gradle/
 build/
+
+# Neovim / Vim Swap Files
+*.swp
+*.swo
+.netrwhist
+
+# OS / IDE specific
+.DS_Store
+.idea/
+.vscode/
