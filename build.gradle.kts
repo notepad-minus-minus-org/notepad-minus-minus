@@ -1,9 +1,19 @@
 plugins {
     id("java")
+    application
 }
 
-group = "dev.odt"
+group = "com.nmm"
 version = "1.0-SNAPSHOT"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_26
+    targetCompatibility = JavaVersion.VERSION_26
+}
+
+application {
+    mainClass.set("com.nmm.Main")
+}
 
 repositories {
     mavenCentral()
