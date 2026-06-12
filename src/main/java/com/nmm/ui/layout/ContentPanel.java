@@ -9,21 +9,27 @@ import java.awt.*;
 
 public class ContentPanel extends JPanel {
 
-	private final EditPane editPane;
-	private final RenderPane renderPane;
+	private EditPane editPane;
+	private RenderPane renderPane;
 	private final JSplitPane splitPane;
 
 	public ContentPanel(MainFrame frame) {
 		setLayout(new BorderLayout());
 
-		editPane = new EditPane(frame);
-		renderPane = new RenderPane(frame);
-
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, editPane, renderPane);
+		editPane = null;
+		renderPane = null;
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
 		splitPane.setResizeWeight(0.5);
 
 		add(splitPane, BorderLayout.CENTER);
+	}
+
+	public void initializePanes(EditPane editPane, RenderPane renderPane) {
+		this.editPane = editPane;
+		this.renderPane = renderPane;
+		splitPane.setLeftComponent(editPane);
+		splitPane.setRightComponent(renderPane);
 	}
 
 	public void updateLayout(boolean editorVisible, boolean renderVisible, int dividerLocation) {

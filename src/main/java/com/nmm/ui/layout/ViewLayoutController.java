@@ -1,5 +1,6 @@
 package com.nmm.ui.layout;
 
+import com.nmm.ui.menu.MainMenuBar;
 import com.nmm.ui.state.ViewState;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ public class ViewLayoutController {
 	private final SidebarPanel sidebarPanel;
 	private final ContentPanel contentPanel;
 	private final JSplitPane mainSplitPane;
+	private MainMenuBar mainMenuBar;
 
 	public ViewLayoutController(ViewState state, SidebarPanel sidebarPanel,
 			ContentPanel contentPanel) {
@@ -24,8 +26,16 @@ public class ViewLayoutController {
 		mainSplitPane.setDividerLocation(state.getSidebarDividerLocation());
 	}
 
+	public void setMenuBar(MainMenuBar menuBar) {
+		this.mainMenuBar = menuBar;
+	}
+
 	public JSplitPane getMainSplitPane() {
 		return mainSplitPane;
+	}
+
+	public ViewState getState() {
+		return state;
 	}
 
 	public void setSidebarVisible(boolean visible) {
@@ -44,16 +54,25 @@ public class ViewLayoutController {
 
 		mainSplitPane.revalidate();
 		mainSplitPane.repaint();
+		if (mainMenuBar != null) {
+			mainMenuBar.refreshViewMenuStates();
+		}
 	}
 
 	public void setEditorVisible(boolean visible) {
 		state.setEditorVisible(visible);
 		updateContentLayout();
+		if (mainMenuBar != null) {
+			mainMenuBar.refreshViewMenuStates();
+		}
 	}
 
 	public void setRenderVisible(boolean visible) {
 		state.setRenderVisible(visible);
 		updateContentLayout();
+		if (mainMenuBar != null) {
+			mainMenuBar.refreshViewMenuStates();
+		}
 	}
 
 	private void updateContentLayout() {

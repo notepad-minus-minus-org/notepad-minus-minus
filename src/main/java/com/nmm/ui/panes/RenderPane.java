@@ -1,13 +1,14 @@
 package com.nmm.ui.panes;
 
 import com.nmm.ui.MainFrame;
+import com.nmm.ui.layout.ViewLayoutController;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class RenderPane extends JPanel {
 
-    public RenderPane(MainFrame mainFrame) {
+    public RenderPane(MainFrame mainFrame, ViewLayoutController controller) {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createLineBorder(UIManager.getColor("Component.borderColor")));
 
@@ -18,6 +19,8 @@ public class RenderPane extends JPanel {
 
         JButton closeButton = new JButton("×");
         closeButton.setFocusPainted(false);
+        closeButton.setToolTipText("Close Render Preview");
+        closeButton.addActionListener(_ -> controller.setRenderVisible(false));
 
         header.add(title, BorderLayout.CENTER);
         header.add(closeButton, BorderLayout.EAST);

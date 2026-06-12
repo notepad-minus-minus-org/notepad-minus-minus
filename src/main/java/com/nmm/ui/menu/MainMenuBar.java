@@ -6,11 +6,25 @@ import javax.swing.*;
 
 public class MainMenuBar extends JMenuBar {
 
+    private final ViewLayoutController controller;
+    private JCheckBoxMenuItem sidebarItem;
+    private JCheckBoxMenuItem editorItem;
+    private JCheckBoxMenuItem renderItem;
+
     public MainMenuBar(ViewLayoutController controller) {
+        this.controller = controller;
         add(createFileMenu());
         add(createEditMenu());
-        add(createViewMenu(controller));
+        add(createViewMenu());
         add(createSettingsMenu());
+    }
+
+    public void refreshViewMenuStates() {
+        if (sidebarItem != null && editorItem != null && renderItem != null) {
+            sidebarItem.setState(controller.getState().isSidebarVisible());
+            editorItem.setState(controller.getState().isEditorVisible());
+            renderItem.setState(controller.getState().isRenderVisible());
+        }
     }
 
     private JMenu createFileMenu() {
@@ -55,24 +69,20 @@ public class MainMenuBar extends JMenuBar {
         return menu;
     }
 
-    private JMenu createViewMenu(ViewLayoutController controller) {
+    private JMenu createViewMenu() {
         JMenu menu = new JMenu("View");
 
-        JCheckBoxMenuItem sidebar = new JCheckBoxMenuItem("Show Sidebar", true);
+        sidebarItem = new JCheckBoxMenuItem("Show Sidebar", true);
+        editorItem = new JCheckBoxMenuItem("Show Editor", true);
+        renderItem = new JCheckBoxMenuItem("Show Render Preview", true);
 
-        JCheckBoxMenuItem editor = new JCheckBoxMenuItem("Show Editor", true);
+        sidebarItem.addItemListener(e -> controller.setSidebarVisible(sidebarItem.isSelected()));
+        editorItem.addItemListener(e -> controller.setEditorVisible(editorItem.isSelected()));
+        renderItem.addItemListener(e -> controller.setRenderVisible(renderItem.isSelected()));
 
-        JCheckBoxMenuItem render = new JCheckBoxMenuItem("Show Render Preview", true);
-
-        sidebar.addItemListener(e -> controller.setSidebarVisible(sidebar.isSelected()));
-
-        editor.addItemListener(e -> controller.setEditorVisible(editor.isSelected()));
-
-        render.addItemListener(e -> controller.setRenderVisible(render.isSelected()));
-
-        menu.add(sidebar);
-        menu.add(editor);
-        menu.add(render);
+        menu.add(sidebarItem);
+        menu.add(editorItem);
+        menu.add(renderItem);
 
         return menu;
     }
