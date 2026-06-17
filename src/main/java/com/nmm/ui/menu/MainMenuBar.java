@@ -1,8 +1,10 @@
 package com.nmm.ui.menu;
 
 import com.nmm.ui.layout.ViewLayoutController;
+import com.nmm.ui.util.IconUtil;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
 
 public class MainMenuBar extends JMenuBar {
 
@@ -19,6 +21,14 @@ public class MainMenuBar extends JMenuBar {
         add(createSettingsMenu());
     }
 
+    private JMenuItem createMenuItem(String text, ImageIcon icon) {
+        JMenuItem item = new JMenuItem(text, icon);
+        if (icon != null) {
+            item.setHorizontalAlignment(SwingConstants.LEFT);
+        }
+        return item;
+    }
+
     public void refreshViewMenuStates() {
         if (sidebarItem != null && editorItem != null && renderItem != null) {
             sidebarItem.setState(controller.getState().isSidebarVisible());
@@ -29,48 +39,57 @@ public class MainMenuBar extends JMenuBar {
 
     private JMenu createFileMenu() {
         JMenu menu = new JMenu("File");
+        menu.setMnemonic(KeyEvent.VK_F);
 
-        menu.add(new JMenuItem("New Project"));
-        menu.add(new JMenuItem("Open..."));
-
-        menu.addSeparator();
-
-        menu.add(new JMenuItem("Save"));
-        menu.add(new JMenuItem("Save As..."));
+        menu.add(createMenuItem("New Project", IconUtil.getNewFile()));
+        menu.add(createMenuItem("Open...", IconUtil.getOpen()));
 
         menu.addSeparator();
 
-        menu.add(new JMenuItem("Exit"));
+        menu.add(createMenuItem("Save", IconUtil.getSave()));
+        menu.add(createMenuItem("Save As...", IconUtil.getSave()));
+
+        menu.addSeparator();
+
+        menu.add(createMenuItem("Exit", IconUtil.getPlaceholder()));
 
         return menu;
     }
 
     private JMenu createEditMenu() {
         JMenu menu = new JMenu("Edit");
+        menu.setMnemonic(KeyEvent.VK_E);
 
-        menu.add(new JMenuItem("Undo"));
-        menu.add(new JMenuItem("Redo"));
+        JMenuItem undoItem = new JMenuItem("Undo", IconUtil.getPlaceholder());
+        undoItem.setToolTipText("Undo (Ctrl+Z)");
+        menu.add(undoItem);
+
+        JMenuItem redoItem = new JMenuItem("Redo", IconUtil.getPlaceholder());
+        redoItem.setToolTipText("Redo (Ctrl+Y)");
+        menu.add(redoItem);
 
         menu.addSeparator();
 
-        menu.add(new JMenuItem("Cut"));
-        menu.add(new JMenuItem("Copy"));
-        menu.add(new JMenuItem("Paste"));
+        menu.add(createMenuItem("Cut", IconUtil.getPlaceholder()));
+        menu.add(createMenuItem("Copy", IconUtil.getPlaceholder()));
+        menu.add(createMenuItem("Paste", IconUtil.getPlaceholder()));
 
         return menu;
     }
 
     private JMenu createSettingsMenu() {
         JMenu menu = new JMenu("Settings");
+        menu.setMnemonic(KeyEvent.VK_S);
 
-        menu.add(new JMenuItem("Preferences"));
-        menu.add(new JMenuItem("Keymaps"));
+        menu.add(createMenuItem("Preferences", IconUtil.getPlaceholder()));
+        menu.add(createMenuItem("Keymaps", IconUtil.getPlaceholder()));
 
         return menu;
     }
 
     private JMenu createViewMenu() {
         JMenu menu = new JMenu("View");
+        menu.setMnemonic(KeyEvent.VK_V);
 
         sidebarItem = new JCheckBoxMenuItem("Show Sidebar", true);
         editorItem = new JCheckBoxMenuItem("Show Editor", true);
