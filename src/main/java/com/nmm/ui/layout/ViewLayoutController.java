@@ -1,8 +1,11 @@
 package com.nmm.ui.layout;
 
 import com.nmm.ui.menu.MainMenuBar;
+import com.nmm.ui.panes.EditPane;
 import com.nmm.ui.state.ViewState;
+import com.nmm.ui.state.ViewState.FileType;
 import com.nmm.ui.MainFrame;
+import com.nmm.ui.util.FileFilter;
 
 import java.io.File;
 
@@ -32,6 +35,9 @@ public class ViewLayoutController {
 				new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidebarPanel, contentPanel);
 
 		mainSplitPane.setDividerLocation(state.getSidebarDividerLocation());
+
+		fileChooser.setFileFilter(new FileFilter());
+		fileChooser.setAcceptAllFileFilterUsed(false);
 	}
 
 	public void openFileAction() {
@@ -39,9 +45,44 @@ public class ViewLayoutController {
 
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
-			System.out.println("Opening file: " + selectedFile.getAbsolutePath());
 
-			// TODO: handle selected file
+			FileFilter filter = new FileFilter();
+			if (!filter.accept(selectedFile)) {
+				JOptionPane.showMessageDialog(mainFrame,
+						"This file format is not supported by the application.", "Unsupported File",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			String fileName = selectedFile.getName();
+
+			FileType detectedType = FileType.TEXT;
+			if (fileName.endsWith(".pdf")) {
+				detectedType = FileType.PDF;
+			} else if (fileName.endsWith(".epub")) {
+				detectedType = FileType.EPUB;
+			}
+
+			EditPane editPane = contentPanel.getEditPane();
+
+			state.setFileType(detectedType);
+
+			if (detectedType == ViewState.FileType.TEXT) {
+				try {
+					String fileContent = java.nio.file.Files.readString(selectedFile.toPath());
+					editPane.setEditorText(fileContent);
+					editPane.updateActiveView(EditPane.EditPaneState.EDITING);
+					setRenderVisible(false);
+
+				} catch (java.io.IOException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(mainFrame, "Failed to read from the file.",
+							"Read Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				editPane.updateActiveView(EditPane.EditPaneState.EMPTY);
+				// TODO: handle pdf and epub files
+			}
 		}
 	}
 
