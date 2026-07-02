@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
         SidebarPanel sidebarPanel = new SidebarPanel();
         ContentPanel contentPanel = new ContentPanel(this);
         ViewLayoutController controller =
-                new ViewLayoutController(state, sidebarPanel, contentPanel);
+                new ViewLayoutController(this, state, sidebarPanel, contentPanel);
 
         EditPane editPane = new EditPane(this, controller);
         RenderPane renderPane = new RenderPane(this, controller);

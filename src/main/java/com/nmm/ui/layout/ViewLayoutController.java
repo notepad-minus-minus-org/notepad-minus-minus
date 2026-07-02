@@ -2,6 +2,9 @@ package com.nmm.ui.layout;
 
 import com.nmm.ui.menu.MainMenuBar;
 import com.nmm.ui.state.ViewState;
+import com.nmm.ui.MainFrame;
+
+import java.io.File;
 
 import javax.swing.*;
 
@@ -11,11 +14,16 @@ public class ViewLayoutController {
 	private final SidebarPanel sidebarPanel;
 	private final ContentPanel contentPanel;
 	private final JSplitPane mainSplitPane;
+
+	private final MainFrame mainFrame;
+	private final JFileChooser fileChooser = new JFileChooser();
+
 	private MainMenuBar mainMenuBar;
 
-	public ViewLayoutController(ViewState state, SidebarPanel sidebarPanel,
+	public ViewLayoutController(MainFrame mainFrame, ViewState state, SidebarPanel sidebarPanel,
 			ContentPanel contentPanel) {
 
+		this.mainFrame = mainFrame;
 		this.state = state;
 		this.sidebarPanel = sidebarPanel;
 		this.contentPanel = contentPanel;
@@ -24,6 +32,17 @@ public class ViewLayoutController {
 				new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidebarPanel, contentPanel);
 
 		mainSplitPane.setDividerLocation(state.getSidebarDividerLocation());
+	}
+
+	public void openFileAction() {
+		int returnValue = fileChooser.showOpenDialog(mainFrame);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			System.out.println("Opening file: " + selectedFile.getAbsolutePath());
+
+			// TODO: handle selected file
+		}
 	}
 
 	public void setMenuBar(MainMenuBar menuBar) {

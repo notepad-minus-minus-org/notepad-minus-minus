@@ -26,7 +26,11 @@ public class EditPane extends JPanel {
         header.add(closeButton, BorderLayout.EAST);
         add(header, BorderLayout.NORTH);
 
-        JLabel placeholder = new JLabel("Editor Content Placeholder", SwingConstants.CENTER);
-        add(placeholder, BorderLayout.CENTER);
+		JButton openFileButton = new JButton("Open File");
+		openFileButton.addActionListener(_ -> controller.openFileAction());
+
+		JPanel buttonWrapper = new JPanel(new GridBagLayout());
+		buttonWrapper.add(openFileButton);
+        add(buttonWrapper, BorderLayout.CENTER);
     }
 }
