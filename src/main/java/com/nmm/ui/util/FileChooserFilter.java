@@ -2,7 +2,7 @@ package com.nmm.ui.util;
 
 import java.io.File;
 
-public class FileFilter extends javax.swing.filechooser.FileFilter {
+public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
 
 	@Override
 	public boolean accept(File f) {

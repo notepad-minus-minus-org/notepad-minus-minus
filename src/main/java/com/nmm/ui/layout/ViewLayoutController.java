@@ -5,7 +5,7 @@ import com.nmm.ui.panes.EditPane;
 import com.nmm.ui.state.ViewState;
 import com.nmm.ui.state.ViewState.FileType;
 import com.nmm.ui.MainFrame;
-import com.nmm.ui.util.FileFilter;
+import com.nmm.ui.util.FileChooserFilter;
 
 import java.io.File;
 
@@ -36,7 +36,7 @@ public class ViewLayoutController {
 
 		mainSplitPane.setDividerLocation(state.getSidebarDividerLocation());
 
-		fileChooser.setFileFilter(new FileFilter());
+		fileChooser.setFileFilter(new FileChooserFilter());
 		fileChooser.setAcceptAllFileFilterUsed(false);
 	}
 
@@ -46,7 +46,7 @@ public class ViewLayoutController {
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
 
-			FileFilter filter = new FileFilter();
+			FileChooserFilter filter = new FileChooserFilter();
 			if (!filter.accept(selectedFile)) {
 				JOptionPane.showMessageDialog(mainFrame,
 						"This file format is not supported by the application.", "Unsupported File",
