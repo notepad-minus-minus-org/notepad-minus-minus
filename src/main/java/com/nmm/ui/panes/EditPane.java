@@ -62,4 +62,8 @@ public class EditPane extends JPanel {
 	public void setEditorText(String text) {
 		textEditorArea.setText(text);
 	}
+
+	public String getEditorText() {
+		return textEditorArea.getText();
+	}
 }

@@ -4,7 +4,7 @@ import com.nmm.ui.layout.ViewLayoutController;
 import com.nmm.ui.util.IconUtil;
 
 import javax.swing.*;
-
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
@@ -52,8 +52,11 @@ public class MainMenuBar extends JMenuBar {
 
 		menu.addSeparator();
 
-		menu.add(createMenuItem("Save", IconUtil.getSave(), _ -> {
-		}));
+		var saveItem = createMenuItem("Save", IconUtil.getSave(), _ -> controller.saveFileAction());
+		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+				Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		menu.add(saveItem);
+
 		menu.add(createMenuItem("Save As", IconUtil.getSave(), _ -> {
 		}));
 

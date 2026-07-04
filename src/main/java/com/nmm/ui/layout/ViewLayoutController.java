@@ -1,14 +1,14 @@
 package com.nmm.ui.layout;
 
+import com.nmm.core.model.DocumentSession;
+import com.nmm.core.model.DocumentSession.FileType;
 import com.nmm.ui.menu.MainMenuBar;
 import com.nmm.ui.panes.EditPane;
 import com.nmm.ui.state.ViewState;
-import com.nmm.ui.state.ViewState.FileType;
 import com.nmm.ui.MainFrame;
 import com.nmm.ui.util.FileChooserFilter;
 
 import java.io.File;
-
 import javax.swing.*;
 
 public class ViewLayoutController {
@@ -64,12 +64,15 @@ public class ViewLayoutController {
 			}
 
 			EditPane editPane = contentPanel.getEditPane();
+			DocumentSession session = state.getSession();
 
-			state.setFileType(detectedType);
+			session.setFileType(detectedType);
 
-			if (detectedType == ViewState.FileType.TEXT) {
+			if (detectedType == FileType.TEXT) {
 				try {
 					String fileContent = java.nio.file.Files.readString(selectedFile.toPath());
+					session.setCurrentFile(selectedFile);
+
 					editPane.setEditorText(fileContent);
 					editPane.updateActiveView(EditPane.EditPaneState.EDITING);
 					setRenderVisible(false);
@@ -80,9 +83,34 @@ public class ViewLayoutController {
 							"Read Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
+				session.setCurrentFile(null);
 				editPane.updateActiveView(EditPane.EditPaneState.EMPTY);
 				// TODO: handle pdf and epub files
 			}
+		}
+	}
+
+	public void saveFileAction() {
+		DocumentSession session = state.getSession();
+		File currentFile = session.getCurrentFile();
+
+		if (currentFile == null || session.getFileType() != FileType.TEXT) {
+			JOptionPane.showMessageDialog(mainFrame, "No open file to save.", "Warning",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		EditPane editPane = contentPanel.getEditPane();
+		String contentToSave = editPane.getEditorText();
+
+		try {
+			java.nio.file.Files.writeString(currentFile.toPath(), contentToSave);
+			JOptionPane.showMessageDialog(mainFrame, "File saved successfully!", "Success",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (java.io.IOException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(mainFrame, "Failed to save the file.", "Save Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

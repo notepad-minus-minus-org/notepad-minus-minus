@@ -1,5 +1,7 @@
 package com.nmm.ui.state;
 
+import com.nmm.core.model.DocumentSession;
+
 public class ViewState {
 
 	private boolean sidebarVisible = true;
@@ -8,22 +10,18 @@ public class ViewState {
 	private int sidebarDividerLocation = 280;
 	private int contentDividerLocation = 350;
 
-	public enum FileType {
-		NONE, TEXT, PDF, EPUB
+	private final DocumentSession session;
+
+	public ViewState(DocumentSession session) {
+		this.session = session;
 	}
 
-	private FileType currentFileType = FileType.NONE;
-
-	public FileType getFileType() {
-		return currentFileType;
-	}
-
-	public void setFileType(FileType fileType) {
-		this.currentFileType = fileType == null ? FileType.NONE : fileType;
+	public DocumentSession getSession() {
+		return session;
 	}
 
 	public boolean isFileOpen() {
-		return currentFileType != FileType.NONE;
+		return session.isFileOpen();
 	}
 
 	public boolean isSidebarVisible() {
