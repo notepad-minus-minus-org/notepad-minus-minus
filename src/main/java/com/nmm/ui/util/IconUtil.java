@@ -14,8 +14,8 @@ public class IconUtil {
     private static final String ICON_PATH = "/icons/";
 
     /**
-     * Loads an icon by its base name (without extension). With the default size of 16px.
-     * Supports .png and .jpg files.
+     * Loads an icon by its base name (without extension). With the default size of 16px. Supports
+     * .png and .jpg files.
      *
      * @param name the base name of the icon (e.g., "open", "save")
      * @return an ImageIcon, or null if not found
@@ -24,7 +24,7 @@ public class IconUtil {
         return loadImageIcon(name, 16);
     }
 
-	/**
+    /**
      * Loads an icon by name with specific size, handling spaces in filename.
      *
      * @param name the base name of the icon (can contain spaces like "empty file")
@@ -41,7 +41,8 @@ public class IconUtil {
                 if (url != null) {
                     BufferedImage image = ImageIO.read(url);
                     if (image != null) {
-                        return new ImageIcon(image.getScaledInstance(size, -1, java.awt.Image.SCALE_SMOOTH));
+                        return new ImageIcon(
+                                image.getScaledInstance(size, -1, java.awt.Image.SCALE_SMOOTH));
                     }
                 }
             } catch (IOException e) {
@@ -53,12 +54,12 @@ public class IconUtil {
         return null;
     }
 
-	/**
-	 * Gets a placeholder icon. For development only.
-	 */
-	public static ImageIcon getPlaceholder() {
-		return loadImageIcon("placeholder");
-	}
+    /**
+     * Gets a placeholder icon. For development only.
+     */
+    public static ImageIcon getPlaceholder() {
+        return loadImageIcon("placeholder");
+    }
 
     /**
      * Gets a bold icon.
@@ -137,6 +138,14 @@ public class IconUtil {
         return loadImageIcon("save");
     }
 
+    public static ImageIcon getSaveAs() {
+        return loadImageIcon("save as");
+    }
+
+    public static ImageIcon getExit() {
+        return loadImageIcon("exit2");
+    }
+
     /**
      * Gets an empty/new file icon.
      */
@@ -151,19 +160,54 @@ public class IconUtil {
         return loadImageIcon("unsaved", 16);
     }
 
-	/**
-	 * Gets an undo icon.
-	 */
-	public static ImageIcon getUndo() {
-		// TODO: replace the placeholder with an icon
-		return getPlaceholder();
-	}
+    /**
+     * Gets an undo icon.
+     */
+    public static ImageIcon getUndo() {
+        // TODO: replace the placeholder with an icon
+        return loadImageIcon("undo2", 16);
+    }
 
-	/**
-	 * Gets a redo icon.
-	 */
-	public static ImageIcon getRedo() {
-		// TODO: replace the placeholder with an icon
-		return getPlaceholder();
-	}
+    /**
+     * Gets a redo icon.
+     */
+    public static ImageIcon getRedo() {
+        return loadImageIcon("redo2", 16);
+    }
+
+    public static ImageIcon getCopy() {
+        return loadImageIcon("copy2");
+    }
+
+    public static ImageIcon getCut() {
+        return loadImageIcon("cut2");
+    }
+
+    public static ImageIcon getPaste() {
+        return loadImageIcon("paste2");
+    }
+
+    public static ImageIcon getLeftAlign() {
+        return loadImageIcon("left align", 16);
+    }
+
+    public static ImageIcon getRightAlign() {
+        return loadImageIcon("right align", 16);
+    }
+
+    public static ImageIcon getCenterAlign() {
+        return loadImageIcon("center align", 16);
+    }
+
+    public static ImageIcon getJustifyAlign() {
+        return loadImageIcon("justify", 16);
+    }
+
+    public static ImageIcon getPreferences() {
+        return loadImageIcon("settings");
+    }
+
+    public static ImageIcon getKeymaps() {
+        return loadImageIcon("keys");
+    }
 }

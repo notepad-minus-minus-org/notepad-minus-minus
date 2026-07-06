@@ -58,16 +58,16 @@ public class FormattingToolBar extends JToolBar {
 
 		ButtonGroup alignGroup = new ButtonGroup();
 
-		JButton leftAlign = createIconButton(IconUtil.getPlaceholder(), "Left Align (Ctrl+L)");
+		JButton leftAlign = createIconButton(IconUtil.getLeftAlign(), "Left Align (Ctrl+L)");
 		alignGroup.add(leftAlign);
 
-		JButton centerAlign = createIconButton(IconUtil.getPlaceholder(), "Center Align (Ctrl+E)");
+		JButton centerAlign = createIconButton(IconUtil.getCenterAlign(), "Center Align (Ctrl+E)");
 		alignGroup.add(centerAlign);
 
-		JButton rightAlign = createIconButton(IconUtil.getPlaceholder(), "Right Align (Ctrl+R)");
+		JButton rightAlign = createIconButton(IconUtil.getRightAlign(), "Right Align (Ctrl+R)");
 		alignGroup.add(rightAlign);
 
-		JButton justifyAlign = createIconButton(IconUtil.getPlaceholder(), "Justify (Ctrl+J)");
+		JButton justifyAlign = createIconButton(IconUtil.getJustifyAlign(), "Justify (Ctrl+J)");
 		alignGroup.add(justifyAlign);
 
 		leftAlign.setSelected(true);
