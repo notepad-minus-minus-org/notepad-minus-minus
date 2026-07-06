@@ -1,13 +1,28 @@
 package com.nmm.ui.state;
 
+import com.nmm.core.model.DocumentSession;
+
 public class ViewState {
 
 	private boolean sidebarVisible = true;
 	private boolean editorVisible = true;
 	private boolean renderVisible = true;
-
 	private int sidebarDividerLocation = 280;
 	private int contentDividerLocation = 350;
+
+	private final DocumentSession session;
+
+	public ViewState(DocumentSession session) {
+		this.session = session;
+	}
+
+	public DocumentSession getSession() {
+		return session;
+	}
+
+	public boolean isFileOpen() {
+		return session.isFileOpen();
+	}
 
 	public boolean isSidebarVisible() {
 		return sidebarVisible;

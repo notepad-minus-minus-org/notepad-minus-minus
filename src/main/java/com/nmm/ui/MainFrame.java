@@ -1,5 +1,6 @@
 package com.nmm.ui;
 
+import com.nmm.core.model.DocumentSession;
 import com.nmm.ui.layout.ContentPanel;
 import com.nmm.ui.layout.SidebarPanel;
 import com.nmm.ui.layout.ViewLayoutController;
@@ -20,11 +21,11 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        ViewState state = new ViewState();
+        ViewState state = new ViewState(new DocumentSession());
         SidebarPanel sidebarPanel = new SidebarPanel();
         ContentPanel contentPanel = new ContentPanel(this);
         ViewLayoutController controller =
-                new ViewLayoutController(state, sidebarPanel, contentPanel);
+                new ViewLayoutController(this, state, sidebarPanel, contentPanel);
 
         EditPane editPane = new EditPane(this, controller);
         RenderPane renderPane = new RenderPane(this, controller);

@@ -1,8 +1,14 @@
 package com.nmm.ui.layout;
 
+import com.nmm.core.model.DocumentSession;
+import com.nmm.core.model.DocumentSession.FileType;
 import com.nmm.ui.menu.MainMenuBar;
+import com.nmm.ui.panes.EditPane;
 import com.nmm.ui.state.ViewState;
+import com.nmm.ui.MainFrame;
+import com.nmm.ui.util.FileChooserFilter;
 
+import java.io.File;
 import javax.swing.*;
 
 public class ViewLayoutController {
@@ -11,11 +17,16 @@ public class ViewLayoutController {
 	private final SidebarPanel sidebarPanel;
 	private final ContentPanel contentPanel;
 	private final JSplitPane mainSplitPane;
+
+	private final MainFrame mainFrame;
+	private final JFileChooser fileChooser = new JFileChooser();
+
 	private MainMenuBar mainMenuBar;
 
-	public ViewLayoutController(ViewState state, SidebarPanel sidebarPanel,
+	public ViewLayoutController(MainFrame mainFrame, ViewState state, SidebarPanel sidebarPanel,
 			ContentPanel contentPanel) {
 
+		this.mainFrame = mainFrame;
 		this.state = state;
 		this.sidebarPanel = sidebarPanel;
 		this.contentPanel = contentPanel;
@@ -24,6 +35,83 @@ public class ViewLayoutController {
 				new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidebarPanel, contentPanel);
 
 		mainSplitPane.setDividerLocation(state.getSidebarDividerLocation());
+
+		fileChooser.setFileFilter(new FileChooserFilter());
+		fileChooser.setAcceptAllFileFilterUsed(false);
+	}
+
+	public void openFileAction() {
+		int returnValue = fileChooser.showOpenDialog(mainFrame);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+
+			FileChooserFilter filter = new FileChooserFilter();
+			if (!filter.accept(selectedFile)) {
+				JOptionPane.showMessageDialog(mainFrame,
+						"This file format is not supported by the application.", "Unsupported File",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			String fileName = selectedFile.getName();
+
+			FileType detectedType = FileType.TEXT;
+			if (fileName.endsWith(".pdf")) {
+				detectedType = FileType.PDF;
+			} else if (fileName.endsWith(".epub")) {
+				detectedType = FileType.EPUB;
+			}
+
+			EditPane editPane = contentPanel.getEditPane();
+			DocumentSession session = state.getSession();
+
+			session.setFileType(detectedType);
+
+			if (detectedType == FileType.TEXT) {
+				try {
+					String fileContent = java.nio.file.Files.readString(selectedFile.toPath());
+					session.setCurrentFile(selectedFile);
+
+					editPane.setEditorText(fileContent);
+					editPane.updateActiveView(EditPane.EditPaneState.EDITING);
+					setRenderVisible(false);
+
+				} catch (java.io.IOException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(mainFrame, "Failed to read from the file.",
+							"Read Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				session.setCurrentFile(null);
+				editPane.updateActiveView(EditPane.EditPaneState.EMPTY);
+				// TODO: handle pdf and epub files
+			}
+		}
+	}
+
+	public void saveFileAction() {
+		DocumentSession session = state.getSession();
+		File currentFile = session.getCurrentFile();
+
+		if (currentFile == null || session.getFileType() != FileType.TEXT) {
+			JOptionPane.showMessageDialog(mainFrame, "No open file to save.", "Warning",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		EditPane editPane = contentPanel.getEditPane();
+		String contentToSave = editPane.getEditorText();
+
+		try {
+			java.nio.file.Files.writeString(currentFile.toPath(), contentToSave);
+			JOptionPane.showMessageDialog(mainFrame, "File saved successfully!", "Success",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (java.io.IOException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(mainFrame, "Failed to save the file.", "Save Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void setMenuBar(MainMenuBar menuBar) {
