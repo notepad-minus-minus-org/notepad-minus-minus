@@ -10,116 +10,116 @@ import java.awt.event.KeyEvent;
 
 public class MainMenuBar extends JMenuBar {
 
-	private final ViewLayoutController controller;
-	private JCheckBoxMenuItem sidebarItem;
-	private JCheckBoxMenuItem editorItem;
-	private JCheckBoxMenuItem renderItem;
+    private final ViewLayoutController controller;
+    private JCheckBoxMenuItem sidebarItem;
+    private JCheckBoxMenuItem editorItem;
+    private JCheckBoxMenuItem renderItem;
 
-	public MainMenuBar(ViewLayoutController controller) {
-		this.controller = controller;
-		add(createFileMenu());
-		add(createEditMenu());
-		add(createViewMenu());
-		add(createSettingsMenu());
-	}
+    public MainMenuBar(ViewLayoutController controller) {
+        this.controller = controller;
+        add(createFileMenu());
+        add(createEditMenu());
+        add(createViewMenu());
+        add(createSettingsMenu());
+    }
 
-	private JMenuItem createMenuItem(String text, ImageIcon icon, ActionListener action) {
-		JMenuItem item = new JMenuItem(text, icon);
-		if (icon != null) {
-			item.setHorizontalAlignment(SwingConstants.LEFT);
-		}
+    private JMenuItem createMenuItem(String text, ImageIcon icon, ActionListener action) {
+        JMenuItem item = new JMenuItem(text, icon);
+        if (icon != null) {
+            item.setHorizontalAlignment(SwingConstants.LEFT);
+        }
 
-		item.addActionListener(action);
+        item.addActionListener(action);
 
-		return item;
-	}
+        return item;
+    }
 
-	public void refreshViewMenuStates() {
-		if (sidebarItem != null && editorItem != null && renderItem != null) {
-			sidebarItem.setState(controller.getState().isSidebarVisible());
-			editorItem.setState(controller.getState().isEditorVisible());
-			renderItem.setState(controller.getState().isRenderVisible());
-		}
-	}
+    public void refreshViewMenuStates() {
+        if (sidebarItem != null && editorItem != null && renderItem != null) {
+            sidebarItem.setState(controller.getState().isSidebarVisible());
+            editorItem.setState(controller.getState().isEditorVisible());
+            renderItem.setState(controller.getState().isRenderVisible());
+        }
+    }
 
-	private JMenu createFileMenu() {
-		JMenu menu = new JMenu("File");
-		menu.setMnemonic(KeyEvent.VK_F);
+    private JMenu createFileMenu() {
+        JMenu menu = new JMenu("File");
+        menu.setMnemonic(KeyEvent.VK_F);
 
-		menu.add(createMenuItem("New Project", IconUtil.getNewFile(), _ -> {
-		}));
-		menu.add(createMenuItem("Open", IconUtil.getOpen(), _ -> controller.openFileAction()));
+        menu.add(createMenuItem("New Project", IconUtil.getNewFile(), _ -> {
+        }));
+        menu.add(createMenuItem("Open", IconUtil.getOpen(), _ -> controller.openFileAction()));
 
-		menu.addSeparator();
+        menu.addSeparator();
 
-		var saveItem = createMenuItem("Save", IconUtil.getSave(), _ -> controller.saveFileAction());
-		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-				Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-		menu.add(saveItem);
+        var saveItem = createMenuItem("Save", IconUtil.getSave(), _ -> controller.saveFileAction());
+        saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        menu.add(saveItem);
 
-		menu.add(createMenuItem("Save As", IconUtil.getSave(), _ -> {
-		}));
+        menu.add(createMenuItem("Save As", IconUtil.getSaveAs(), _ -> {
+        }));
 
-		menu.addSeparator();
+        menu.addSeparator();
 
-		menu.add(createMenuItem("Exit", IconUtil.getPlaceholder(), _ -> {
-		}));
+        menu.add(createMenuItem("Exit", IconUtil.getExit(), _ -> {
+        }));
 
-		return menu;
-	}
+        return menu;
+    }
 
-	private JMenu createEditMenu() {
-		JMenu menu = new JMenu("Edit");
-		menu.setMnemonic(KeyEvent.VK_E);
+    private JMenu createEditMenu() {
+        JMenu menu = new JMenu("Edit");
+        menu.setMnemonic(KeyEvent.VK_E);
 
-		JMenuItem undoItem = new JMenuItem("Undo", IconUtil.getPlaceholder());
-		undoItem.setToolTipText("Undo (Ctrl+Z)");
-		menu.add(undoItem);
+        JMenuItem undoItem = new JMenuItem("Undo", IconUtil.getUndo());
+        undoItem.setToolTipText("Undo (Ctrl+Z)");
+        menu.add(undoItem);
 
-		JMenuItem redoItem = new JMenuItem("Redo", IconUtil.getPlaceholder());
-		redoItem.setToolTipText("Redo (Ctrl+Y)");
-		menu.add(redoItem);
+        JMenuItem redoItem = new JMenuItem("Redo", IconUtil.getRedo());
+        redoItem.setToolTipText("Redo (Ctrl+Y)");
+        menu.add(redoItem);
 
-		menu.addSeparator();
+        menu.addSeparator();
 
-		menu.add(createMenuItem("Cut", IconUtil.getPlaceholder(), _ -> {
-		}));
-		menu.add(createMenuItem("Copy", IconUtil.getPlaceholder(), _ -> {
-		}));
-		menu.add(createMenuItem("Paste", IconUtil.getPlaceholder(), _ -> {
-		}));
+        menu.add(createMenuItem("Cut", IconUtil.getCut(), _ -> {
+        }));
+        menu.add(createMenuItem("Copy", IconUtil.getCopy(), _ -> {
+        }));
+        menu.add(createMenuItem("Paste", IconUtil.getPaste(), _ -> {
+        }));
 
-		return menu;
-	}
+        return menu;
+    }
 
-	private JMenu createSettingsMenu() {
-		JMenu menu = new JMenu("Settings");
-		menu.setMnemonic(KeyEvent.VK_S);
+    private JMenu createSettingsMenu() {
+        JMenu menu = new JMenu("Settings");
+        menu.setMnemonic(KeyEvent.VK_S);
 
-		menu.add(createMenuItem("Preferences", IconUtil.getPlaceholder(), _ -> {
-		}));
-		menu.add(createMenuItem("Keymaps", IconUtil.getPlaceholder(), _ -> {
-		}));
+        menu.add(createMenuItem("Preferences", IconUtil.getPreferences(), _ -> {
+        }));
+        menu.add(createMenuItem("Keymaps", IconUtil.getKeymaps(), _ -> {
+        }));
 
-		return menu;
-	}
+        return menu;
+    }
 
-	private JMenu createViewMenu() {
-		JMenu menu = new JMenu("View");
-		menu.setMnemonic(KeyEvent.VK_V);
+    private JMenu createViewMenu() {
+        JMenu menu = new JMenu("View");
+        menu.setMnemonic(KeyEvent.VK_V);
 
-		sidebarItem = new JCheckBoxMenuItem("Show Sidebar", true);
-		editorItem = new JCheckBoxMenuItem("Show Editor", true);
-		renderItem = new JCheckBoxMenuItem("Show Render Preview", true);
+        sidebarItem = new JCheckBoxMenuItem("Show Sidebar", true);
+        editorItem = new JCheckBoxMenuItem("Show Editor", true);
+        renderItem = new JCheckBoxMenuItem("Show Render Preview", true);
 
-		sidebarItem.addItemListener(e -> controller.setSidebarVisible(sidebarItem.isSelected()));
-		editorItem.addItemListener(e -> controller.setEditorVisible(editorItem.isSelected()));
-		renderItem.addItemListener(e -> controller.setRenderVisible(renderItem.isSelected()));
+        sidebarItem.addItemListener(e -> controller.setSidebarVisible(sidebarItem.isSelected()));
+        editorItem.addItemListener(e -> controller.setEditorVisible(editorItem.isSelected()));
+        renderItem.addItemListener(e -> controller.setRenderVisible(renderItem.isSelected()));
 
-		menu.add(sidebarItem);
-		menu.add(editorItem);
-		menu.add(renderItem);
+        menu.add(sidebarItem);
+        menu.add(editorItem);
+        menu.add(renderItem);
 
-		return menu;
-	}
+        return menu;
+    }
 }
