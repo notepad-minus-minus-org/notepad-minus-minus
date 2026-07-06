@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo "Running Spotless formatting check before pushing..."
+
+# Detect win***s
+if [ -f "./gradlew.bat" ] && { echo "$OSTYPE" | grep -q "msys" || echo "$OSTYPE" | grep -q "cygwin" || [ -n "$COMSPEC" ]; }; then
+    ./gradlew.bat spotlessCheck
+else
+    ./gradlew spotlessCheck
+fi
+
+GRADLE_EXIT_CODE=$?
+
+if [ $GRADLE_EXIT_CODE -ne 0 ]; then
+    echo "Push aborted: You have unformatted code."
+    echo "Run './gradlew spotlessApply' (or gradlew.bat on Windows) to fix it."
+    exit 1
+fi

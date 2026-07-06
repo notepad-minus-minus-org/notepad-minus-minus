@@ -10,8 +10,9 @@ import com.nmm.ui.panes.RenderPane;
 import com.nmm.ui.state.ViewState;
 import com.nmm.ui.toolbar.FormattingToolBar;
 
-import javax.swing.*;
 import java.awt.*;
+
+import javax.swing.*;
 
 public class MainFrame extends JFrame {
 

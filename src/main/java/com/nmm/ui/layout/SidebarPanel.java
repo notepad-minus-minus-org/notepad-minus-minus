@@ -6,14 +6,11 @@ import javax.swing.*;
 
 public class SidebarPanel extends JSplitPane {
 
-	public SidebarPanel() {
+    public SidebarPanel() {
 
-		super(
-				JSplitPane.VERTICAL_SPLIT,
-				new FileTreePane(),
-				new TableOfContentsPanel());
+        super(JSplitPane.VERTICAL_SPLIT, new FileTreePane(), new TableOfContentsPanel());
 
-		setDividerLocation(400);
-		setResizeWeight(0.5);
-	}
+        setDividerLocation(400);
+        setResizeWeight(0.5);
+    }
 }

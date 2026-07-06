@@ -3,8 +3,9 @@ package com.nmm.ui.panes;
 import com.nmm.ui.MainFrame;
 import com.nmm.ui.layout.ViewLayoutController;
 
-import javax.swing.*;
 import java.awt.*;
+
+import javax.swing.*;
 
 public class RenderPane extends JPanel {
 

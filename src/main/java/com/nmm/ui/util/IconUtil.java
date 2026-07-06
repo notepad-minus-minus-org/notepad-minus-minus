@@ -1,14 +1,13 @@
 package com.nmm.ui.util;
 
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.net.URL;
 
-/**
- * Utility class for loading icons from resources.
- */
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+/** Utility class for loading icons from resources. */
 public class IconUtil {
 
     private static final String ICON_PATH = "/icons/";
@@ -54,86 +53,62 @@ public class IconUtil {
         return null;
     }
 
-    /**
-     * Gets a placeholder icon. For development only.
-     */
+    /** Gets a placeholder icon. For development only. */
     public static ImageIcon getPlaceholder() {
         return loadImageIcon("placeholder");
     }
 
-    /**
-     * Gets a bold icon.
-     */
+    /** Gets a bold icon. */
     public static ImageIcon getBold() {
         return loadImageIcon("b");
     }
 
-    /**
-     * Gets an italic icon.
-     */
+    /** Gets an italic icon. */
     public static ImageIcon getItalic() {
         return loadImageIcon("i");
     }
 
-    /**
-     * Gets an underline icon.
-     */
+    /** Gets an underline icon. */
     public static ImageIcon getUnderline() {
         return loadImageIcon("underline");
     }
 
-    /**
-     * Gets a strikethrough icon.
-     */
+    /** Gets a strikethrough icon. */
     public static ImageIcon getStrikeThrough() {
         return loadImageIcon("strike");
     }
 
-    /**
-     * Gets an unordered list icon.
-     */
+    /** Gets an unordered list icon. */
     public static ImageIcon getUnorderedList() {
         return loadImageIcon("ul");
     }
 
-    /**
-     * Gets an ordered list icon.
-     */
+    /** Gets an ordered list icon. */
     public static ImageIcon getOrderedListItem() {
         return loadImageIcon("ol");
     }
 
-    /**
-     * Gets a code block icon.
-     */
+    /** Gets a code block icon. */
     public static ImageIcon getCodeBlock() {
         return loadImageIcon("code");
     }
 
-    /**
-     * Gets a quote icon.
-     */
+    /** Gets a quote icon. */
     public static ImageIcon getQuote() {
         return loadImageIcon("quote");
     }
 
-    /**
-     * Gets a hyperlink icon.
-     */
+    /** Gets a hyperlink icon. */
     public static ImageIcon getHyperlink() {
         return loadImageIcon("hyperlink");
     }
 
-    /**
-     * Gets an open file icon.
-     */
+    /** Gets an open file icon. */
     public static ImageIcon getOpen() {
         return loadImageIcon("open");
     }
 
-    /**
-     * Gets a save icon.
-     */
+    /** Gets a save icon. */
     public static ImageIcon getSave() {
         return loadImageIcon("save");
     }
@@ -146,31 +121,23 @@ public class IconUtil {
         return loadImageIcon("exit2");
     }
 
-    /**
-     * Gets an empty/new file icon.
-     */
+    /** Gets an empty/new file icon. */
     public static ImageIcon getNewFile() {
         return loadImageIcon("empty file", 16);
     }
 
-    /**
-     * Gets a document with unsaved changes icon.
-     */
+    /** Gets a document with unsaved changes icon. */
     public static ImageIcon getUnsaved() {
         return loadImageIcon("unsaved", 16);
     }
 
-    /**
-     * Gets an undo icon.
-     */
+    /** Gets an undo icon. */
     public static ImageIcon getUndo() {
         // TODO: replace the placeholder with an icon
         return loadImageIcon("undo2", 16);
     }
 
-    /**
-     * Gets a redo icon.
-     */
+    /** Gets a redo icon. */
     public static ImageIcon getRedo() {
         return loadImageIcon("redo2", 16);
     }

@@ -1,10 +1,11 @@
 package com.nmm.ui;
 
+import java.awt.*;
+import java.io.File;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.awt.*;
-import java.io.File;
 
 public class FileTreePane extends JPanel {
 
