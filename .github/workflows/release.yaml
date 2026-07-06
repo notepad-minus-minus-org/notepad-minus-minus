@@ -9,6 +9,10 @@ jobs:
   build:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+
+    permissions:
+      contents: write
+
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
@@ -17,11 +21,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 26
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '26'
           cache: 'gradle'
 
       - name: Grant execute permission for gradlew (Linux only)
@@ -35,21 +39,29 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           cd build/jpackage
-          tar -czf ../../MySwingApp-linux-${{ github.ref_name }}.tar.gz MySwingApp/
+          tar -cJf ../../notepad-minus-minus-linux-${{ github.ref_name }}.tar.xz notepad-minus-minus/
 
       - name: Package Windows Build
         if: matrix.os == 'windows-latest'
         shell: bash
         run: |
           cd build/jpackage
-          7z a ../../MySwingApp-windows-${{ github.ref_name }}.zip MySwingApp/
+          7z a ../../notepad-minus-minus-windows-${{ github.ref_name }}.zip notepad-minus-minus/
 
-      - name: Upload Artifacts to GitHub Release
+      - name: Upload Linux Artifact to GitHub Release
+        if: matrix.os == 'ubuntu-latest'
         uses: softprops/action-gh-release@v2
         with:
           prerelease: ${{ contains(github.ref_name, '-') }}
-          files: |
-            MySwingApp-linux-${{ github.ref_name }}.tar.gz
-            MySwingApp-windows-${{ github.ref_name }}.zip
+          files: notepad-minus-minus-linux-${{ github.ref_name }}.tar.xz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Windows Artifact to GitHub Release
+        if: matrix.os == 'windows-latest'
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          files: notepad-minus-minus-windows-${{ github.ref_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
