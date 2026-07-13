@@ -6,7 +6,7 @@ import com.nmm.ui.MainFrame;
 import javax.swing.*;
 
 public class Main {
-    static void main() {
+    public static void main(String[] args) {
         FlatIntelliJLaf.setup();
 
         SwingUtilities.invokeLater(() -> {

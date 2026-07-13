@@ -8,8 +8,8 @@ group = "com.nmm"
 version = "1.0-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_26
-    targetCompatibility = JavaVersion.VERSION_26
+    sourceCompatibility = JavaVersion.VERSION_24
+    targetCompatibility = JavaVersion.VERSION_24
 }
 
 application {
@@ -26,6 +26,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation("com.formdev:flatlaf:3.7")
+    implementation("org.apache.pdfbox:pdfbox:3.0.5")
 }
 
 tasks.test {

@@ -70,6 +70,7 @@ public class ViewLayoutController {
             }
 
             EditPane editPane = contentPanel.getEditPane();
+            com.nmm.ui.panes.RenderPane renderPane = contentPanel.getRenderPane();
             DocumentSession session = state.getSession();
 
             session.setFileType(detectedType);
@@ -81,6 +82,8 @@ public class ViewLayoutController {
 
                     editPane.setEditorText(fileContent);
                     editPane.updateActiveView(EditPane.EditPaneState.EDITING);
+                    renderPane.showPlaceholder();
+                    setEditorVisible(true);
                     setRenderVisible(false);
 
                 } catch (java.io.IOException e) {
@@ -92,9 +95,18 @@ public class ViewLayoutController {
                             JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                session.setCurrentFile(null);
+                session.setCurrentFile(selectedFile);
                 editPane.updateActiveView(EditPane.EditPaneState.EMPTY);
-                // TODO: handle pdf and epub files
+
+                if (detectedType == FileType.PDF) {
+                    renderPane.showPdf(selectedFile);
+                    setEditorVisible(false);
+                    setRenderVisible(true);
+                } else {
+                    renderPane.showPlaceholder();
+                    setEditorVisible(false);
+                    setRenderVisible(true);
+                }
             }
         }
     }
